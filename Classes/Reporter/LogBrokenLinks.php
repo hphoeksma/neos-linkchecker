@@ -57,19 +57,17 @@ class LogBrokenLinks extends BaseReporter
         UriInterface $url,
         RequestException $requestException,
         ?UriInterface $foundOnUrl = null
-    ): int
+    ): void
     {
         parent::crawlFailed($url, $requestException, $foundOnUrl);
         $statusCode = $requestException->getCode();
         if ($this->isExcludedStatusCode($statusCode)) {
-            return 0;
+            exit();
         }
 
         $this->outputLine(
             $this->formatLogMessage($url, $requestException, $foundOnUrl)
         );
-
-        return $statusCode;
     }
 
     /**

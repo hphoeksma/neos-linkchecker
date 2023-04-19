@@ -12,7 +12,8 @@ namespace Unikka\LinkChecker\Profile;
  * source code.
  */
 
-use Spatie\Crawler\CrawlAllUrls;
+use Spatie\Crawler\CrawlProfiles\CrawlAllUrls;
+
 
 /**
  * Class CheckAllLinks

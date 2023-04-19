@@ -15,9 +15,9 @@ namespace Unikka\LinkChecker\Reporter;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\ConsoleOutput;
 use Neos\Flow\Persistence\Exception\IllegalObjectTypeException;
+use Spatie\Crawler\CrawlObservers\CrawlObserver;
 use Unikka\LinkChecker\Domain\Model\ResultItem;
 use Unikka\LinkChecker\Domain\Repository\ResultItemRepository;
-use Spatie\Crawler\CrawlObserver;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
@@ -80,24 +80,22 @@ abstract class BaseReporter extends CrawlObserver
     /**
      * Called when the crawler has crawled the given url successfully.
      *
-     * @param \Psr\Http\Message\UriInterface $url
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param null|\Psr\Http\Message\UriInterface $foundOnUrl
+     * @param UriInterface $url
+     * @param ResponseInterface $response
+     * @param null|UriInterface $foundOnUrl
      *
-     * @return int|string
+     * @return void
      */
     public function crawled(
         UriInterface $url,
         ResponseInterface $response,
         ?UriInterface $foundOnUrl = null
-    )
+    ): void
     {
         $statusCode = (int)$response->getStatusCode();
         if (!$this->isExcludedStatusCode($statusCode)) {
             $this->addCrawlingResultToStore($url, $foundOnUrl, $statusCode);
         }
-
-        return $statusCode;
     }
 
     /**
@@ -113,14 +111,12 @@ abstract class BaseReporter extends CrawlObserver
         UriInterface $url,
         RequestException $requestException,
         ?UriInterface $foundOnUrl = null
-    ): int
+    ): void
     {
         $statusCode = (int)$requestException->getCode();
         if (!$this->isExcludedStatusCode($statusCode)) {
             $this->addCrawlingResultToStore($url, $foundOnUrl, $statusCode);
         }
-
-        return $statusCode;
     }
 
     /**
