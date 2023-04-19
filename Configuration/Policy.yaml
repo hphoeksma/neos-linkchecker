@@ -7,8 +7,16 @@ privilegeTargets:
       matcher: 'management/linkchecker'
 
 roles:
-  'Neos.Neos:AbstractEditor':
+  'Unikka.LinkChecker:LinkCheckerManager':
+    label: 'LinkChecker Manager'
+    description: 'Manage checked links'
     privileges:
     -
       privilegeTarget: 'Unikka.LinkChecker:Backend.Module.Management.LinkChecker'
       permission: GRANT
+
+  'Neos.ContentRepository:Administrator':
+    privileges:
+      -
+        privilegeTarget: 'Unikka.LinkChecker:Backend.Module.Management.LinkChecker'
+        permission: GRANT
