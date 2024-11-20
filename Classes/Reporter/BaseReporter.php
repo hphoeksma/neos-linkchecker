@@ -80,17 +80,15 @@ abstract class BaseReporter extends CrawlObserver
     /**
      * Called when the crawler has crawled the given url successfully.
      *
+     *
      * @param UriInterface $url
      * @param ResponseInterface $response
-     * @param null|UriInterface $foundOnUrl
-     *
+     * @param UriInterface|null $foundOnUrl
+     * @param string|null $linkText
      * @return void
      */
     public function crawled(
-        UriInterface $url,
-        ResponseInterface $response,
-        ?UriInterface $foundOnUrl = null
-    ): void
+        UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
     {
         $statusCode = (int)$response->getStatusCode();
         if (!$this->isExcludedStatusCode($statusCode)) {
@@ -101,17 +99,15 @@ abstract class BaseReporter extends CrawlObserver
     /**
      * Called when the crawler had a problem crawling the given url.
      *
-     * @param \Psr\Http\Message\UriInterface $url
-     * @param \GuzzleHttp\Exception\RequestException $requestException
-     * @param \Psr\Http\Message\UriInterface|null $foundOnUrl
      *
+     * @param UriInterface $url
+     * @param RequestException $requestException
+     * @param UriInterface|null $foundOnUrl
+     * @param string|null $linkText
      * @return int
      */
     public function crawlFailed(
-        UriInterface $url,
-        RequestException $requestException,
-        ?UriInterface $foundOnUrl = null
-    ): void
+        UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
     {
         $statusCode = (int)$requestException->getCode();
         if (!$this->isExcludedStatusCode($statusCode)) {

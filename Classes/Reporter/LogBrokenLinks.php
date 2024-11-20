@@ -47,17 +47,15 @@ class LogBrokenLinks extends BaseReporter
     /**
      * Called when the crawler had a problem crawling the given url.
      *
-     * @param \Psr\Http\Message\UriInterface $url
-     * @param \GuzzleHttp\Exception\RequestException $requestException
-     * @param \Psr\Http\Message\UriInterface|null $foundOnUrl
      *
+     * @param UriInterface $url
+     * @param RequestException $requestException
+     * @param UriInterface|null $foundOnUrl
+     * @param string|null $linkText
      * @return int
      */
     public function crawlFailed(
-        UriInterface $url,
-        RequestException $requestException,
-        ?UriInterface $foundOnUrl = null
-    ): void
+        UriInterface $url, RequestException $requestException, ?UriInterface $foundOnUrl = null, ?string $linkText = null): void
     {
         parent::crawlFailed($url, $requestException, $foundOnUrl);
         $statusCode = $requestException->getCode();
